@@ -11,7 +11,7 @@ const cityName = "boston"
 const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
 
   function updatePage(response){
-  console.log(cityName)
+  console.log(name)
     }
   $.ajax({
     url: queryURL,
@@ -21,3 +21,6 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
       $("#cityNameView").text(JSON.stringify(response));
   })
 //});
+
+// need a clear function
+//local stoarge
