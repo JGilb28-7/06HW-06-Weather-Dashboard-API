@@ -14,7 +14,7 @@ $("#add-city").on("click", function (event) {
   let cityName = $("#search-input").val();
 
   //const cityName = "boston"
-  const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
+  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
 
   function updatePage(response) {
     console.log(response);
