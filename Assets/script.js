@@ -4,7 +4,7 @@
 //let citySearch = $("#search-term").val()
 
 //const cityName = $("#search-input").val() //text
-let cityNames = [""]; //look at the movie 
+let cityNames = ["boston"] //look at the movie 
 
 $("#add-city").on("click", function(event) {
   event.preventDefault(); 
@@ -12,21 +12,6 @@ $("#add-city").on("click", function(event) {
 
   const cityName = $("#search-input").val();
   
-  //cityNames.push(cityName);
-
-  //renderButtons();
-
-  //$(document).on("click", ".text", renderButtons);
-
-  
-
-  // Calling renderButtons which handles the processing of our movie array
-  //renderButtons();
-  
-
-//cityName.push(cityName);
-//renderButtons();
-
 //const cityName = "boston"
 const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
 
@@ -39,18 +24,28 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
    
 
   }).then(function(response) {
-      $("#cityNameView").text(response.name);//removed the .name
+      $("#city-view").text(response.name);//removed the .name
       console.log(queryURL);
       console.log(response)
       
+      //Ref code from the Bujumbara Data Activity
+       //$(".city").html("<h1>" + response.name + " Weather Details</h1>");
+       //$(".wind").text("Wind Speed: " + response.wind.speed);
+       //$(".humidity").text("Humidity: " + response.main.humidity);
+       
+   
+       var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+
+       //$(".temp").text("Temperature (K) " + response.main.temp);
+      // $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
 
 
-
-      letcityDiv = $("<div class = 'cityInfo'>");
+//commenting out my code attempt
+      //letcityDiv = $("<div class = 'cityInfo'>");
       
-      letCtyinfo1 = response.name;
-      letP1EL= $("<p>").text("Temp: + .main.temp");
-      letP1EL.append(letcityDiv);
+      //letCtyinfo1 = response.name;
+      //letP1EL= $("<p>").text("Temp: + .main.temp");
+      //letP1EL.append(letcityDiv);
 
   })
       
@@ -87,31 +82,18 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
 
 //need to append the search to a button - see movie activity
 
+  function renderButtons() {
+    $("#buttons-view").empty();
 
-
-
-function renderButtons() {
-
-  // Deleting the movies prior to adding new movies
-  // (this is necessary otherwise you will have repeat buttons)
-  $("#buttonsViews").empty();
-
-  // Looping through the array of cities
-  for (let i = 0; i < cityName.length; i++) {
-
-    // Then dynamicaly generating buttons for each movie in the array
-    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-    let a = $("<button>");
-    // Adding a class of movie-btn to our button
-    a.addClass("text");
-    // Adding a data-attribute
-    a.attr("dataText", cityNames[i]);
-    // Providing the initial button text
-    a.text(cityNames[i]);
-    // Adding the button to the buttons-view div
-    $("#buttonsViews").prepend(a);
+    for (var i = 0; i < cityName.length; i++) {
+      var a = $("<button>");
+      a.addClass("city");
+      a.attr("data-name", cityNames[i]);
+      a.text(cityNames[i]);
+      $("#buttons-view").append(a);
+    }
   }
-}
+
 
 // This function handles events where a city button is clicked
 $("#cityNameView").on("click", function(event) {
