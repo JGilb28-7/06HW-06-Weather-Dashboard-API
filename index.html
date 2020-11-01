@@ -28,22 +28,21 @@
         <form id="Weather-form">
             <label for="search">Search for City</label>
             <input type="text" id="search-input"></input> 
-            <input id="add-city" type="submit" val="click to add city" class="fa fa-search" aria-hidden="true"></input>
+            <button id="add-city" type="submit" val="click to add city" class="fa fa-search" aria-hidden="true">submit</button>
             <!--This button will trigger our AJAX call-->
             <!--<button onclick="response"()</button>-->    
                 <!--need the buttons here-->
-                <!--<div id="cityNameView"></div>-->
-            <button id="cityNameView"></button> <!--this should just be the city name that calls the detail-->
-            <button id="cityNameView">placeholder</button>
+            <div id="buttonViews" class="btnViews"></div>
+                <button id="cityNameView" dataText=" "> </button> <!--this should just be the city name that calls the detail-->
+           
         </form> 
         <!--need to have the names display and stay using local storage-->
 
-        <div class="card" id="cityDetails" type ="name here"></div>
-            <div class="row"></div>
-            <div class="col.md-8">placeholder for the city details</div>
-        
+           
+            <div class ="cityInfo"></div>    
+                <p></p>        
 
-        </div>
+            </div>
         <!--list of cities-->
         <!--a display modal
         need to return the 

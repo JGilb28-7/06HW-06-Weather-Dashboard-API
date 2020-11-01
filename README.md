@@ -1,8 +1,18 @@
 # 06HW-06-Weather-Dashboard-API
+## not MVP!
 Homework 06 Server-Side APIs: Weather Dashboard - using the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data.
 evelopers are often tasked with retrieving data from another application's API and using it in the context of their own. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
 
 Use the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data for cities. The documentation includes a section called "How to start" that will provide basic setup and usage instructions. Use `localStorage` to store any persistent data.
+
+## Tasks
+Optain the openweathermap key: ff72d96a24410b758f22678b53189672 - Complete
+create the search feature on the HTML with onclick to search - incomplete 
+
+<i class="fa fa-search" aria-hidden="true"></i>
+https://fontawesome.com/v4.7.0/icon/search = fa fa search
+
+
 
 ## User Story
 
