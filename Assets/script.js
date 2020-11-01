@@ -15,7 +15,9 @@ $("#add-city").on("click", function (event) {
 
   //const cityName = "boston"
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
-
+  //Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
+  // changed from http: to https: still not working
+  
   function updatePage(response) {
     console.log(response);
   }
