@@ -4,13 +4,13 @@
 //let citySearch = $("#search-term").val()
 
 //const cityName = $("#search-input").val() //text
-let cityNames = ["boston"] //look at the movie 
+let cityNames = [""] //look at the movie 
 
 $("#add-city").on("click", function(event) {
   event.preventDefault(); 
   console.log("click");
 
-  const cityName = $("#search-input").val();
+  let cityName = $("#search-input").val();
   
 //const cityName = "boston"
 const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
@@ -24,17 +24,17 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
    
 
   }).then(function(response) {
-      $("#city-view").text(response.name);//removed the .name
+      $("#city-view1").text(response.name);//removed the .name
       console.log(queryURL);
       console.log(response)
       
-      //Ref code from the Bujumbara Data Activity
+      //Ref code from the Bujumbara Data Activity - need to make this update the HTML from onclick
        //$(".city").html("<h1>" + response.name + " Weather Details</h1>");
        //$(".wind").text("Wind Speed: " + response.wind.speed);
        //$(".humidity").text("Humidity: " + response.main.humidity);
        
    
-       var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+       //var tempF = (response.main.temp - 273.15) * 1.80 + 32;
 
        //$(".temp").text("Temperature (K) " + response.main.temp);
       // $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
@@ -83,20 +83,20 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
 //need to append the search to a button - see movie activity
 
   function renderButtons() {
-    $("#buttons-view").empty();
+    $("#city-view1").empty();
 
     for (var i = 0; i < cityName.length; i++) {
+      event.preventDefault();
       var a = $("<button>");
       a.addClass("city");
-      a.attr("data-name", cityNames[i]);
+      a.attr("data-name", cityName[i]);//not sure this is talking to array
       a.text(cityNames[i]);
-      $("#buttons-view").append(a);
+      $("#city-view1").append(a);
     }
   }
 
-
 // This function handles events where a city button is clicked
-$("#cityNameView").on("click", function(event) {
+$("#city-view1").on("click", function(event) {
   event.preventDefault();
   //this line grabs the input from the textbox
   let NameInput = $("#cityName").val();
