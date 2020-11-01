@@ -89,8 +89,8 @@ const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&a
       event.preventDefault();
       var a = $("<button>");
       a.addClass("city");
-      a.attr("data-name", cityName[i]);//not sure this is talking to array
-      a.text(cityNames[i]);
+      a.attr("data-name", cityName)//not sure this is talking to array
+      a.text(cityNames[""]);
       $("#city-view1").append(a);
     }
   }
