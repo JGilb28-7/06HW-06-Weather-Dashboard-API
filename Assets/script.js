@@ -8,16 +8,33 @@
 let cityNames = [] //look at the movie 
 
 $("#add-city").on("click", function (event) {
-  event.preventDefault();
+  
   console.log("click");
-
+  
   let cityName = $("#search-input").val();
+
+  //tried the code from ask_the_class from DMS - and stack Link
+  //$("#search-input").keyup(function(event){
+
+    //if (event.keyCode === 13) 
+      //$("#add-city").click();
+
+     // event.preventDefault();
+   
+
+    //currentWeather(cityName);
+  
+  
+  
+  //added 11/2/2020 looked a code Danielle provied and W3S
+
 
   //const cityName = "boston"
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
+  //this is the API for the 5 day forcast - const quertURL1 = `api.openweathermap.org/data/2.5/forecast?q={city name}&appid=appid=ff72d96a24410b758f22678b53189672`
   //Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
   // changed from http: to https: still not working
-  
+
   function updatePage(response) {
     console.log(response);
   }
@@ -112,7 +129,7 @@ $("#add-city").on("click", function (event) {
       a.addClass("city");
       a.attr("data-name", cityName)//not sure this is talking to array
       a.text(cityNames[""]);
-      $("#city-view1").push(a);
+      $("#city-view1").push(a);//this should push the new text to the array and display in button - not working.
     }
   }
 
@@ -136,6 +153,5 @@ $("#add-city").on("click", function (event) {
   //localStorage.setItem("json");//need to pull from the results json //https://www.w3schools.com/js/js_json_intro.asp
 
   //$("#--.description").val(localStorage.getItem("cityName"));??
-
 
 });
