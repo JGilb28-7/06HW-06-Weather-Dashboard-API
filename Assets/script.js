@@ -1,53 +1,40 @@
 //code attempts prior to tutor session and saturday pre-class session
-    //const cityName = $("#search-term").val() //text
-    //const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
-    //let citySearch = $("#search-term").val()
-    //const cityName = $("#search-input").val() //text
+//const cityName = $("#search-term").val() //text
+//const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
+//let citySearch = $("#search-term").val()
+//const cityName = $("#search-input").val() //text
 
 //created an Array to hold the city names but not updating - I believe that i can not have an empty array??    
 let cityNames = [] //look at the movie 
-
+let cityViews = $("#city-view");
 $("#add-city").on("click", function (event) {
-  
+  event.preventDefault()
   console.log("click");
-  
+
   let cityName = $("#search-input").val();
 
-  //tried the code from ask_the_class from DMS - and stack Link
-  //$("#search-input").keyup(function(event){
-
-    //if (event.keyCode === 13) 
-      //$("#add-city").click();
-
-     // event.preventDefault();
-   
-
-    //currentWeather(cityName);
-  
-  
-  
-  //added 11/2/2020 looked a code Danielle provied and W3S
-
-
-  //const cityName = "boston"
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
   //this is the API for the 5 day forcast - const quertURL1 = `api.openweathermap.org/data/2.5/forecast?q={city name}&appid=appid=ff72d96a24410b758f22678b53189672`
-  //Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
+  
+  //Issue - Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
   // changed from http: to https: still not working
 
-  function updatePage(response) {
-    console.log(response);
-  }
+
   $.ajax({
     url: queryURL,
     method: "GET"
-
-
   }).then(function (response) {
-    $("#city-view1").text(response.name);//removed the .name
+    
+    cityNames = JSON.parse(localStorage.getItem("cityNames"))
+    
+    cityNames.push(cityName)
+  
+    localStorage.setItem("cityNames", JSON.stringify(cityNames));
+    
     console.log(queryURL);
     console.log(response)
-
+    
+    renderButtons()
     //Ref code from the Bujumbara Data Activity - need to make this update the HTML from onclick
     //the will need to start and be coded and need to be completed for each item when the new city button is clicked
 
@@ -68,22 +55,17 @@ $("#add-city").on("click", function (event) {
     //$(".temp").text("Temperature (K) " + response.main.temp);
     $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
 
-//will need to add an additional ajax statement for the 5 day forcast!
-//need to look at API for the 5day data 
-//function updatePage(response) {
-  //console.log(response);
-//}
-//$.ajax({
-  //url: queryURL,
-  //method: "GET"
-
-    //commenting out my prior code attempt
-    //letcityDiv = $("<div class = 'cityInfo'>");
-    //letCtyinfo1 = response.name;
-    //letP1EL= $("<p>").text("Temp: + .main.temp");
-    //letP1EL.append(letcityDiv);
+    //will need to add an additional ajax statement for the 5 day forcast!
+    //need to look at API for the 5day data 
+    //function updatePage(response) {
+    //console.log(response);
+    //}
+    //$.ajax({
+    //url: queryURL,
+    //method: "GET"
 
   })
+
   //create the below to show I can identify the path from the console.log
   //let cityDiv = $("<div id = 'btnViews'>");
   // let results = response.data
@@ -100,17 +82,7 @@ $("#add-city").on("click", function (event) {
 
   //let cityDiv = $("#buttonViews");
   //}
-  //need to get into the main and pull the following  
-  //main:
-  //feels_like: 264.9
-  //humidity: 74
-  //pressure: 1032
-  //temp: 270.54
-  //temp_max: 273.15
-  //temp_min: 269.15
-  //__proto__: Object
-  //name: "Boston"
-  // need to change from kelvin to f
+
 
   //resource - https://www.w3schools.com/js/js_json_intro.asp - 
 
@@ -119,17 +91,19 @@ $("#add-city").on("click", function (event) {
   //local stoarge for the button for name to recall the seach and display data
 
 
-  //need to append the search to a button - see movie activity and use the class activities as ref point for code
+  //need to append the search to a button - see weather button name and use the class activities as ref point for code
   function renderButtons() {
-    $("#city-view1").empty();
+    let cityGetItem = localStorage.getItem("cityNames")
+    cityViews.empty();
+    
+    for (var i = 0; i < cityGetItem.length; i++) {
+      let cityNameBtn = $("<button>");
+      cityNameBtn.text(cityGetItem[i]);
+      cityNameBtn.on("click",function(){
+        console.log(reponse.name, "clicked")
+      })
+      cityViews.append(cityNameBtn)
 
-    for (var i = 0; i < cityName.length; i++) {
-      event.preventDefault();
-      var a = $("<button>");
-      a.addClass("city");
-      a.attr("data-name", cityName)//not sure this is talking to array
-      a.text(cityNames[""]);
-      $("#city-view1").push(a);//this should push the new text to the array and display in button - not working.
     }
   }
 
@@ -152,6 +126,6 @@ $("#add-city").on("click", function (event) {
 
   //localStorage.setItem("json");//need to pull from the results json //https://www.w3schools.com/js/js_json_intro.asp
 
-  //$("#--.description").val(localStorage.getItem("cityName"));??
+  //$("#--.description").val);??
 
 });
