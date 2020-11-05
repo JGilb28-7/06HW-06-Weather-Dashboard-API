@@ -1,11 +1,6 @@
-//code attempts prior to tutor session and saturday pre-class session
-//const cityName = $("#search-term").val() //text
-//const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
-//let citySearch = $("#search-term").val()
-//const cityName = $("#search-input").val() //text
+//need to clear the local storage on the entering the site  
+//localStorage.clear(); //all items
 
-//created an Array to hold the city names but not updating - I believe that i can not have an empty array??    
- //look at the movie 
 let cityViews = $("#city-view");
 $("#add-city").on("click", function (event) {
   event.preventDefault()
@@ -18,7 +13,6 @@ $("#add-city").on("click", function (event) {
   
   //Issue - Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
   // changed from http: to https: still not working
-
 
   $.ajax({
     url: queryURL,
@@ -36,51 +30,67 @@ $("#add-city").on("click", function (event) {
       let citiesArray = JSON.parse(localStorage.getItem("cityNames"));
       citiesArray.push(cityName);
       localStorage.setItem("cityNames", JSON.stringify(citiesArray));
+
   }
-    
     console.log(queryURL);
     console.log(response)
     
     renderButtons()
-    //Ref code from the Bujumbara Data Activity - need to make this update the HTML from onclick
-    //the will need to start and be coded and need to be completed for each item when the new city button is clicked
-
-    //I beleive I need to creat a new ajax response for this:
-    //let resultsDiv = $("<div class = 'city'>");
-    //let city = response.main.city;
-    //let ptag1 = $("<p>").text("City Name:" + city);
-    //resultsDiv.append(ptag1);
-
-    //kept the $ in code to show it is returning data on the intial city search until I have the onclick event fixed..
-    $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-    $(".wind").text("Wind Speed: " + response.wind.speed);
-    $(".humidity").text("Humidity: " + response.main.humidity);
-
-
-    let tempF = (response.main.temp - 273.15) * 1.80 + 32;
-
-    //$(".temp").text("Temperature (K) " + response.main.temp);
-    $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
-
-    //will need to add an additional ajax statement for the 5 day forcast!
+     //will need to add an additional ajax statement for the 5 day forcast!
     //need to look at API for the 5day data 
-    //function updatePage(response) 
-    //console.log(response);
-    //}
-    //$.ajax({
-    //url: queryURL,
-    //method: "GET"
-
+  
   })
 
+    $.ajax({
+    url: queryURL,
+    method: "GET"
+
+    }).then(function(response) {
+      //$("#details").text(JSON.stringify(response));
+      //$("#details").text(response)
+      
+
+      $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+      $(".wind").text("Wind Speed: " + response.wind.speed);
+      $(".humidity").text("Humidity: " + response.main.humidity);
+
+      let tempF = (response.main.temp - 273.15) * 1.80 + 32;
+      $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
+
+      //let cityDetails = $("<div id = 'details'>");
+      //let results = response.data
+      //let City = response.name
+      //let humidity = response.main.humidity
+      //let temp = response.main.temp
+      //let feelslike = response.main.feels_like
+      //let pressure = response.main.pressure
+
+      // console.log(response);
+
+      /* Constructing HTML containing the artist information
+      var artistName = $("<h1>").text(response.name);
+      var artistURL = $("<a>").attr("href", response.url).append(artistName);
+      var artistImage = $("<img>").attr("src", response.thumb_url);
+      var trackerCount = $("<h2>").text(response.tracker_count + " fans tracking this artist");
+      var upcomingEvents = $("<h2>").text(response.upcoming_event_count + " upcoming events");
+      var goToArtist = $("<a>").attr("href", response.url).text("See Tour Dates");*/
+
+      // Empty the contents of the artist-div, append the new artist content
+     // $("#artist-div").empty();
+    //$("#artist-div").append(artistURL, artistImage, trackerCount, upcomingEvents, goToArtist);
+        //});
+
+      let resultsDiv = $("<div class = 'details1'>");
+      let city = response.main.city;
+      let ptag1 = $("<p>").text(":" + city);
+      resultsDiv.append(ptag1);
+
+      })
+    
+  
+
   //create the below to show I can identify the path from the console.log
-  //let cityDiv = $("<div id = 'btnViews'>");
-  // let results = response.data
-  //let City = response.name
-  //let humidity = response.main.humidity
-  //let temp = response.main.temp
-  //let feels_like = response.main.feels_like
-  //let pressure = response.main.pressure
+  
 
   //need for loop to return the data
   //for (let i = 0; i < results.length; i++){
@@ -116,14 +126,11 @@ $("#add-city").on("click", function (event) {
   }
   renderButtons()
   
-  // This function handles events where a city button is clicked
-  $("#city-view1").on("click", function (event) {
-    event.preventDefault();
-    //this line grabs the input from the textbox
-    let NameInput = $("#cityName").val();
 
-    // Adding city names from the textbox to our array
-    //.push(cityNames); //not working and showing error on console.log when not commented out!
+  $("#<button>").on("click", function (event) {
+    event.preventDefault();
+
+    
 
     renderButtons();
   });
@@ -131,6 +138,7 @@ $("#add-city").on("click", function (event) {
   $(document).on("click", ".text", event);
 
   renderButtons();
+ 
   // if this is rendering the butting why am i seeing multismall buttons and not appeending the array?
 
   //localStorage.setItem("json");//need to pull from the results json //https://www.w3schools.com/js/js_json_intro.asp
@@ -138,3 +146,22 @@ $("#add-city").on("click", function (event) {
   //$("#--.description").val);??
 
 });
+
+   // This function handles events where one button is clicked
+   //$("cityNameBtn").on("click", function(event) {
+    //event.preventDefault();
+
+    // This line grabs the input from the textbox
+    //let cityResults = $("cityName").val().trim();
+
+    //Adding the movie from the textbox to our array
+    //movies.push(movie);
+    //console.log(movies);
+
+    // Calling renderButtons which handles the processing of our movie array
+    //renderButtons();
+  //});
+
+  // Function for displaying the movie info
+  // Using $(document).on instead of $(".movie").on to add event listeners to dynamically generated elements
+ //$(document).on("click", "", displayMovieInfo);
