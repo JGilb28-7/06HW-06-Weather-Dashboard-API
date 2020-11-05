@@ -5,7 +5,7 @@
 //const cityName = $("#search-input").val() //text
 
 //created an Array to hold the city names but not updating - I believe that i can not have an empty array??    
-let cityNames = [] //look at the movie 
+ //look at the movie 
 let cityViews = $("#city-view");
 $("#add-city").on("click", function (event) {
   event.preventDefault()
@@ -23,13 +23,20 @@ $("#add-city").on("click", function (event) {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function (response) {
-    
-    cityNames = JSON.parse(localStorage.getItem("cityNames"))
-    
-    cityNames.push(cityName)
   
-    localStorage.setItem("cityNames", JSON.stringify(cityNames));
+  }).then(function (response) {
+    let cityNames = JSON.parse(localStorage.getItem("cityNames"))
+    let updatedCity = [];
+    console.log(cityNames);
+    updatedCity.push(cityName);
+
+    if (cityNames == null) {
+      localStorage.setItem("cityNames", JSON.stringify(updatedCity));
+    } else {
+      let citiesArray = JSON.parse(localStorage.getItem("cityNames"));
+      citiesArray.push(cityName);
+      localStorage.setItem("cityNames", JSON.stringify(citiesArray));
+  }
     
     console.log(queryURL);
     console.log(response)
@@ -57,7 +64,7 @@ $("#add-city").on("click", function (event) {
 
     //will need to add an additional ajax statement for the 5 day forcast!
     //need to look at API for the 5day data 
-    //function updatePage(response) {
+    //function updatePage(response) 
     //console.log(response);
     //}
     //$.ajax({
@@ -93,9 +100,9 @@ $("#add-city").on("click", function (event) {
 
   //need to append the search to a button - see weather button name and use the class activities as ref point for code
   function renderButtons() {
-    let cityGetItem = localStorage.getItem("cityNames")
+    let cityGetItem = JSON.parse(localStorage.getItem("cityNames"))
     cityViews.empty();
-    
+    if (cityGetItem != null){
     for (var i = 0; i < cityGetItem.length; i++) {
       let cityNameBtn = $("<button>");
       cityNameBtn.text(cityGetItem[i]);
@@ -104,9 +111,11 @@ $("#add-city").on("click", function (event) {
       })
       cityViews.append(cityNameBtn)
 
+      }
     }
   }
-
+  renderButtons()
+  
   // This function handles events where a city button is clicked
   $("#city-view1").on("click", function (event) {
     event.preventDefault();
