@@ -1,167 +1,158 @@
-//need to clear the local storage on the entering the site  
-//localStorage.clear(); //all items
+ let cityViews = $("#city-view");
+ let detailsDiv = $("#details");
 
-let cityViews = $("#city-view");
-$("#add-city").on("click", function (event) {
-  event.preventDefault()
-  console.log("click");
-
-  let cityName = $("#search-input").val();
-
-  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
-  //this is the API for the 5 day forcast - const quertURL1 = `api.openweathermap.org/data/2.5/forecast?q={city name}&appid=appid=ff72d96a24410b758f22678b53189672`
-  
-  //Issue - Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
-  // changed from http: to https: still not working
-
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  
-  }).then(function (response) {
-    let cityNames = JSON.parse(localStorage.getItem("cityNames"))
-    let updatedCity = [];
-    console.log(cityNames);
-    updatedCity.push(cityName);
-
-    if (cityNames == null) {
-      localStorage.setItem("cityNames", JSON.stringify(updatedCity));
-    } else {
-      let citiesArray = JSON.parse(localStorage.getItem("cityNames"));
-      citiesArray.push(cityName);
-      localStorage.setItem("cityNames", JSON.stringify(citiesArray));
-
-  }
-    console.log(queryURL);
-    console.log(response)
-    
-    renderButtons()
-     //will need to add an additional ajax statement for the 5 day forcast!
-    //need to look at API for the 5day data 
-  
-  })
-
+ $("#add-city").on("click", function (event) {
+   event.preventDefault()
+   console.log("click");
+ 
+   let cityName = $("#search-input").val();
+ 
+   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`
+   //this is the API for the 5 day forcast - const quertURL1 = `api.openweathermap.org/data/2.5/forecast?q={city name}&appid=appid=ff72d96a24410b758f22678b53189672`
+   
+   //Issue - Getting a mix content error - resource https://stackoverflow.com/questions/18251128/why-am-i-suddenly-getting-a-blocked-loading-mixed-active-content-issue-in-fire
+   
+   //This needs a ()
+   
     $.ajax({
     url: queryURL,
     method: "GET"
-
     }).then(function(response) {
-      //$("#details").text(JSON.stringify(response));
-      //$("#details").text(response)
       
+      // Log the queryURL
+      console.log(queryURL);
 
+      // Log the resulting object
+      console.log(response);
+      
+       //shows from the HTML that the details div is empty used the Sample from Bujumbura
+      
       $(".city").html("<h1>" + response.name + " Weather Details</h1>");
       $(".wind").text("Wind Speed: " + response.wind.speed);
       $(".humidity").text("Humidity: " + response.main.humidity);
-
+      //$(".weatherA").text("Weather:" + response.weather.main);//this is an Array - if time come back and build.
+     
+      // Convert the temp to fahrenheit
       let tempF = (response.main.temp - 273.15) * 1.80 + 32;
-      $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
+      let feelsLkF = (response.main.feels_like - 273.15) * 1.80 +32;
 
-      //let cityDetails = $("<div id = 'details'>");
-      //let results = response.data
-      //let City = response.name
-      //let humidity = response.main.humidity
-      //let temp = response.main.temp
-      //let feelslike = response.main.feels_like
-      //let pressure = response.main.pressure
+      // add temp content to html
+     $(".temp").text("Temperature (K) " + response.main.temp);
+     $(".feelsLk").text("Feel Like:  " + response.main.feels_like);
+     $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
+     $(".feelsLkF").text("Feels Like (F) " + feelsLkF.toFixed(2));
+      
 
-      // console.log(response);
+      // Log the data in the console as well
+      console.log("Wind Speed: " + response.wind.speed);
+      console.log("Humidity: " + response.main.humidity);
+      console.log("Temperature (F): " + tempF);
+      console.log("Feel Like:" + response.main.feels_like);
+    });
+          //Option 2 to append the HTML from the 
+          //$("#details").empty()
+          // Transfer content to HTML
+      
+          /*let detailsDiv = $("#details")
+          let cityNmRsp = $("<h2>").text(response.name)
+          let windSpeed = $("<h2>").text(response.wind.windSpeed);
+          let humidityRsp = $("<h2").text(response.main.humidity)
 
-      /* Constructing HTML containing the artist information
-      var artistName = $("<h1>").text(response.name);
-      var artistURL = $("<a>").attr("href", response.url).append(artistName);
-      var artistImage = $("<img>").attr("src", response.thumb_url);
-      var trackerCount = $("<h2>").text(response.tracker_count + " fans tracking this artist");
-      var upcomingEvents = $("<h2>").text(response.upcoming_event_count + " upcoming events");
-      var goToArtist = $("<a>").attr("href", response.url).text("See Tour Dates");*/
+          let tempF = (response.main.temp - 273.15) * 1.80 + 32;
+          let feelsLkF = (response.main.feels_like - 273.15) * 1.80 +32;
 
-      // Empty the contents of the artist-div, append the new artist content
-     // $("#artist-div").empty();
-    //$("#artist-div").append(artistURL, artistImage, trackerCount, upcomingEvents, goToArtist);
-        //});
+          let tempRsp = $("<p>").text("Temperature (K) " + response.main.temp);
+          let feelsLkRsp = $("<p>").text("Feel Like:  " + response.main.feels_like);
+          let tempFRsp = $("<p>").text("Temperature (F) " + tempF.toFixed(2));
+          let feelsLkFRsp = $("<p>").text("Feels Like (F) " + feelsLkF.toFixed(2));
 
-      let resultsDiv = $("<div class = 'details1'>");
-      let city = response.main.city;
-      let ptag1 = $("<p>").text(":" + city);
-      resultsDiv.append(ptag1);
-
-      })
-    
+          detailsDiv.append(cityNmRsp, windSpeed, humidityRsp, tempRsp, feelsLkRsp, tempFRsp ,feelsLkFRsp)*/
   
-
-  //create the below to show I can identify the path from the console.log
-  
-
-  //need for loop to return the data
-  //for (let i = 0; i < results.length; i++){
-
-  //$("#cityNameView").prepend("buttonViews")
-
-  //let cityDiv = $("#buttonViews");
-  //}
-
-
-  //resource - https://www.w3schools.com/js/js_json_intro.asp - 
-
-  // need a clear function so the names to not remain in the search field
-
-  //local stoarge for the button for name to recall the seach and display data
-
-
-  //need to append the search to a button - see weather button name and use the class activities as ref point for code
-  function renderButtons() {
-    let cityGetItem = JSON.parse(localStorage.getItem("cityNames"))
-    cityViews.empty();
-    if (cityGetItem != null){
-    for (var i = 0; i < cityGetItem.length; i++) {
-      let cityNameBtn = $("<button>");
-      cityNameBtn.text(cityGetItem[i]);
-      cityNameBtn.on("click",function(){
-        console.log(reponse.name, "clicked")
-      })
-      cityViews.append(cityNameBtn)
-
-      }
-    }
-  }
-  renderButtons()
-  
-
-  $("#<button>").on("click", function (event) {
-    event.preventDefault();
-
-    
-
-    renderButtons();
-  });
-
-  $(document).on("click", ".text", event);
-
-  renderButtons();
+    // this created the city name into local storage and added to the CityViews Array - completed during the tutoring session
+   $.ajax({
+     url: queryURL,
+     method: "GET"
+    }).then(function (response) {
+     let cityNames = JSON.parse(localStorage.getItem("cityNames"))
+     let updatedCity = [];
+     console.log(cityNames);
+     updatedCity.push(cityName);
  
-  // if this is rendering the butting why am i seeing multismall buttons and not appeending the array?
+     if (cityNames == null) {
+       localStorage.setItem("cityNames", JSON.stringify(updatedCity));
+     } else {
+       let citiesArray = JSON.parse(localStorage.getItem("cityNames"));
+       citiesArray.push(cityName);
+       localStorage.setItem("cityNames", JSON.stringify(citiesArray));
+      }
+     
+     console.log(queryURL);
+     console.log(response)
+    });
+  
+     renderButtons()
+ 
+   //need to append the search to a button - see weather button name and use the class activities as ref point for code
+   
+   function renderButtons() {
+     let cityGetItem = JSON.parse(localStorage.getItem("cityNames"))
+     cityViews.empty();
+     if (cityGetItem != null){
+     for (var i = 0; i < cityGetItem.length; i++) {
+       let cityNameBtn = $("<button>");
+       cityNameBtn.text(cityGetItem[i]);
+       cityNameBtn.on("click",function(){
+        //console.log(reponse.name, "click")
+       })
+       cityViews.append(cityNameBtn)
+ 
+       }
+     }
+    }
+   renderButtons()
 
-  //localStorage.setItem("json");//need to pull from the results json //https://www.w3schools.com/js/js_json_intro.asp
+  document.getElementById('#button').addEventListener(click, loadData);
+  function loadData() {
+     console.log('button data clicked');
 
-  //$("#--.description").val);??
+   }
 
-});
 
-   // This function handles events where one button is clicked
-   //$("cityNameBtn").on("click", function(event) {
+
+   // let cityBtnTxt = JSON.parse(localStorage.getItem("response"))//line 14
+    //detailsDiv.empty();
+    //if (cityBtnTxt != null){
+    //for (var i = 0; i < cityBtnTxt.length; i++) {
+     // let cityDetailsTxt = $("<details>");
+      //cityDetailsTxt.text(cityBtnTxt[i]);
+      //cityDetailsTxt.on("click",function(){
+        //console.log(reponse.name, "click")
+    
+    //}
+  }
+    //detailsDiv.append(cityBtnTxt)
+   // PCode - have the cityNameBtn need to show the 
+   // This function handles events where a city button is clicked
+   //let detailsDiv = $("#details") 
+   //$("<button>").on("click", function(){
     //event.preventDefault();
+     //let NameInput = $("#cityName").val();
 
-    // This line grabs the input from the textbox
-    //let cityResults = $("cityName").val().trim();
+    //$("button").on("click", function() {
+      // Grabbing and storing the data-animal property value from the button
+      //let  = $(this).attr("cityName");
+    //cityNameBtn.append(detailsDiv)
+     
+     //renderButtons();
+ );
+ 
+  // $(document).on("click", ".text", event);
+ 
+   renderButtons()
 
-    //Adding the movie from the textbox to our array
-    //movies.push(movie);
-    //console.log(movies);
-
-    // Calling renderButtons which handles the processing of our movie array
-    //renderButtons();
-  //});
-
-  // Function for displaying the movie info
-  // Using $(document).on instead of $(".movie").on to add event listeners to dynamically generated elements
- //$(document).on("click", "", displayMovieInfo);
+   //$.ajax({
+   // url: `http://pro.openweathermap.org/data/2.5/forecast/hourly?q={cityName}&appid=c53febb61c173b6f82dd7ef005033d4b`
+   // method: "GET"
+   //}).then(function (response) {
+    //console.log ()
+    //console.log ()
