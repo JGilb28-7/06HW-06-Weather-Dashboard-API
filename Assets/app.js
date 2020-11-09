@@ -77,6 +77,7 @@ function getFiveDayForcastAndDisplay(cityName) {
 
     // Log the resulting object  
       console.log(response);
+     
       //Stackoverflow resource: had to update with my code
       let weatherFive = '';
       // need to create a loop over the time not use the cnt that will limit what is displayed from the array of title:
@@ -84,6 +85,9 @@ function getFiveDayForcastAndDisplay(cityName) {
        //Need to add in the date:
         // changed to respsone, updated the varibale weatherFive, add the date dt_txt but coming back undefined
       $.each(response.list, function(index, val) {
+        
+        for (var i = 0; i < response.list.length; i +++8)
+        
 
         weatherFive += "<b> Date: " + val.dt_txt + "</b>";//Date - need to adjust
         weatherFive += "<p> " // Opening paragraph tag
