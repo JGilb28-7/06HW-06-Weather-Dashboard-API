@@ -12,7 +12,7 @@ const feelsLkFCont = $("#feelsLkF");
 const uvIndxCont = $("#uvIndex")
 const submitBtn = $("#add-city");
 let cities = ["Boston" , "Lynn"];
-let forcastDiv = $("fiveDayForcast")
+let forcastDiv = $("fiveDayForcast");
 //to do - get local storage
 
 function convertToFerinheight(temp) {
@@ -59,8 +59,9 @@ function getCurrentWeatherAndDisplay(cityName) {
 }
 
 function getFiveDayForcastAndDisplay(cityName) {
-  const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`;
- //hused the following resource for the 5 day forcast after the console.log(response)
+  const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&cnt=5&appid=ff72d96a24410b758f22678b53189672`;
+ //used the following resource for the 5 day forcast after the console.log(response)
+ //used the cnt = 5 to limit the daily response - this is in the API Doc for Weather
  //https://stackoverflow.com/questions/49640174/building-a-5-day-forecast-using-open-weather-api-ajax-and-js
   $.ajax({
       url: queryURL,
@@ -75,8 +76,8 @@ function getFiveDayForcastAndDisplay(cityName) {
       //Stackoverflow resource: had to update with my code
       let weatherFive = '';
       weatherFive += "<h2>" + response.city.name + " Five Day Forcast </h2>"; // City (displays once)
-       //Jsg added in the date:
-      
+       //Need to add in the date:
+        // changed to respsone, updated the varibale weatherFive, add the date dt_txt but coming back undefined
       $.each(response.list, function(index, val) {
         weatherFive += "<b>" + val.clouds.dt_txt + " Date </b>";
         weatherFive += "<p>" // Opening paragraph tag
@@ -128,5 +129,11 @@ getCurrentWeatherAndDisplay($(this).text())
 getFiveDayForcastAndDisplay($(this).text())
 });
 
-//Start to build the 5day forcast using API
-//use ${cityName} defined a Variable
+//outstanding items
+  //1. complete the Forcast
+      //A. Limit the degrees length
+      //B. Need to updte the date from undefined line 82
+      //C. Fix the day 0  - should === the current day +1
+      //D. update the .md
+      //F. Local Storage
+      //G. Format HTML/CSS for format once the functionality is complete
