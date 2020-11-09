@@ -12,7 +12,7 @@ const feelsLkFCont = $("#feelsLkF");
 const uvIndxCont = $("#uvIndex")
 const submitBtn = $("#add-city");
 let cities = ["Boston" , "Lynn"];
-let forcastDiv = $("fiveDayForcast");
+let forecastDiv = $("fiveDayForecast"); 
 //to do - get local storage
 
 function convertToFerinheight(temp) {
@@ -20,6 +20,10 @@ function convertToFerinheight(temp) {
   return tempF;
 }
 
+function convertdateTime(){
+
+
+}
 function getCurrentWeatherAndDisplay(cityName) {
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`;
 
@@ -59,9 +63,9 @@ function getCurrentWeatherAndDisplay(cityName) {
 }
 
 function getFiveDayForcastAndDisplay(cityName) {
-  const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&cnt=5&appid=ff72d96a24410b758f22678b53189672`;
+  const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`;
  //used the following resource for the 5 day forcast after the console.log(response)
- //used the cnt = 5 to limit the daily response - this is in the API Doc for Weather
+ //used the cnt = 5 to limit the daily response - this is in the API Doc for Weather &cnt=5 removed need loop
  //https://stackoverflow.com/questions/49640174/building-a-5-day-forecast-using-open-weather-api-ajax-and-js
   $.ajax({
       url: queryURL,
@@ -75,20 +79,25 @@ function getFiveDayForcastAndDisplay(cityName) {
       console.log(response);
       //Stackoverflow resource: had to update with my code
       let weatherFive = '';
+      // need to create a loop over the time not use the cnt that will limit what is displayed from the array of title:
       weatherFive += "<h2>" + response.city.name + " Five Day Forcast </h2>"; // City (displays once)
        //Need to add in the date:
         // changed to respsone, updated the varibale weatherFive, add the date dt_txt but coming back undefined
       $.each(response.list, function(index, val) {
-        weatherFive += "<b>" + val.clouds.dt_txt + " Date </b>";
-        weatherFive += "<p>" // Opening paragraph tag
+
+        weatherFive += "<b> Date: " + val.dt_txt + "</b>";//Date - need to adjust
+        weatherFive += "<p> " // Opening paragraph tag
         weatherFive += "<b>Day " + index + "</b>: " // Day
         //added the convert to Ferinheight to line and the .toFixed() only working on Day 0.
-        weatherFive += convertToFerinheight(val.main.temp) + "&degF" // Temperature
+        weatherFive += convertToFerinheight(val.main.temp).toFixed(2) + "&degF" // Temperature
+        weatherFive += "<span> | Humidity: "+ val.main.humidity + "% </span>"
         weatherFive += "<span> | " + val.weather[0].description + "</span>"; // Description
         weatherFive += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
         weatherFive += "</p>" // Closing paragraph tag
-      });
-      $("#fiveDayForcast").html(weatherFive);
+        
+      
+    });
+      $("#fiveDayForecast").html(weatherFive);
 
   });
 }
@@ -131,9 +140,11 @@ getFiveDayForcastAndDisplay($(this).text())
 
 //outstanding items
   //1. complete the Forcast
-      //A. Limit the degrees length
+      //A. Limit the degrees length - complete - needed to have the .toFixed outside of ().toFixed(2)
       //B. Need to updte the date from undefined line 82
       //C. Fix the day 0  - should === the current day +1
-      //D. update the .md
+      //D. update the .md - in Process 
       //F. Local Storage
-      //G. Format HTML/CSS for format once the functionality is complete
+      //G. Format HTML/CSS for format once the functionality is 
+      //H. Complete the UV Index
+
