@@ -7,8 +7,9 @@ const windSpeedCont = $("#wind");
 const humidityCont = $("#humidity");
 const tempCont = $("#temp");
 const feelsLkCont = $("#feelsLk");
-const tempfCont = $("#tempf");
+const tempfCont = $("#tempF");
 const feelsLkFCont = $("#feelsLkF");
+const uvIndxCont = $("#uvIndex")
 const submitBtn = $("#add-city");
 let cities = ["Boston" , "Lynn"];
 let forcastDiv = $("fiveDayForcast")
@@ -37,7 +38,7 @@ function getCurrentWeatherAndDisplay(cityName) {
     cityTitle.html("<h1>" + response.name + " Weather Details</h1>");
     windSpeedCont.text("Wind Speed: " + response.wind.speed);
     humidityCont.text("Humidity: " + response.main.humidity);
-
+   
     // Convert the temp to fahrenheit
     let tempF = convertToFerinheight(response.main.temp);
     let feelsLkF = convertToFerinheight(response.main.feels_like);
@@ -47,6 +48,7 @@ function getCurrentWeatherAndDisplay(cityName) {
     feelsLkCont.text("Feel Like:  " + response.main.feels_like);
     tempfCont.text("Temperature (F) " + tempF.toFixed(2));
     feelsLkFCont.text("Feels Like (F) " + feelsLkF.toFixed(2));
+    //uvIndxCont.text("UV Index: " + response.weather);//need to link the Array and icon//
 
     // Log the data in the console as well
     console.log("Wind Speed: " + response.wind.speed);
@@ -58,16 +60,34 @@ function getCurrentWeatherAndDisplay(cityName) {
 
 function getFiveDayForcastAndDisplay(cityName) {
   const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=ff72d96a24410b758f22678b53189672`;
-
+ //hused the following resource for the 5 day forcast after the console.log(response)
+ //https://stackoverflow.com/questions/49640174/building-a-5-day-forecast-using-open-weather-api-ajax-and-js
   $.ajax({
       url: queryURL,
       method: "GET",
+      
     }).then(function (response) {
     // Log the queryURL
       console.log(queryURL);
 
-    // Log the resulting object
+    // Log the resulting object  
       console.log(response);
+      //Stackoverflow resource: had to update with my code
+      let weatherFive = '';
+      weatherFive += "<h2>" + response.city.name + " Five Day Forcast </h2>"; // City (displays once)
+       //Jsg added in the date:
+      
+      $.each(response.list, function(index, val) {
+        weatherFive += "<b>" + val.clouds.dt_txt + " Date </b>";
+        weatherFive += "<p>" // Opening paragraph tag
+        weatherFive += "<b>Day " + index + "</b>: " // Day
+        //added the convert to Ferinheight to line and the .toFixed() only working on Day 0.
+        weatherFive += convertToFerinheight(val.main.temp) + "&degF" // Temperature
+        weatherFive += "<span> | " + val.weather[0].description + "</span>"; // Description
+        weatherFive += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
+        weatherFive += "</p>" // Closing paragraph tag
+      });
+      $("#fiveDayForcast").html(weatherFive);
 
   });
 }
