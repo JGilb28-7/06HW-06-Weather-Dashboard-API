@@ -13,6 +13,7 @@ const uvIndxCont = $("#uvIndex")
 const submitBtn = $("#add-city");
 let cities = ["Boston" , "Lynn"];
 let forecastDiv = $("fiveDayForecast"); 
+const dateCont = $("date");
 //to do - get local storage
 
 function convertToFerinheight(temp) {
@@ -39,7 +40,9 @@ function getCurrentWeatherAndDisplay(cityName) {
 
     //shows from the HTML that the details div is empty used the Sample from Bujumbura
 
-    cityTitle.html("<h1>" + response.name + " Weather Details</h1>");
+    cityTitle.html("<h2>" + response.name );
+    //dateCont.text("<h2>" + new Date().toLocaleDateString());
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
     windSpeedCont.text("Wind Speed: " + response.wind.speed);
     humidityCont.text("Humidity: " + response.main.humidity);
    
@@ -59,6 +62,7 @@ function getCurrentWeatherAndDisplay(cityName) {
     console.log("Humidity: " + response.main.humidity);
     console.log("Temperature (F): " + tempF);
     console.log("Feel Like:" + response.main.feels_like);
+    console.log("date:" + response.dt);
   });
 }
 
@@ -79,27 +83,37 @@ function getFiveDayForcastAndDisplay(cityName) {
       console.log(response);
      
       //Stackoverflow resource: had to update with my code
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const timesToDisplay = [0, 8, 16, 32, 40, 48];
+      let d;
+      let dayName;
       let weatherFive = '';
+     
       // need to create a loop over the time not use the cnt that will limit what is displayed from the array of title:
       weatherFive += "<h2>" + response.city.name + " Five Day Forcast </h2>"; // City (displays once)
-       //Need to add in the date:
-        // changed to respsone, updated the varibale weatherFive, add the date dt_txt but coming back undefined
+      //weatherFive += "<b> Date: " + response.list.dt_txt + "</b>";//Date - need to adjust 
+    
+      // changed to respsone, updated the varibale weatherFive, add the date dt_txt but coming back undefined
       $.each(response.list, function(index, val) {
-        
-        for (var i = 0; i < response.list.length; i +++8)
-        
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration - line 17 as example.
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+        //arr.indexOf(searchElement[, fromIndex])
+        //for (var i = 0; i < response.list.length; i++)
+        if(timesToDisplay.includes(index)){
+        d = new Date(response.list[index].dt * 1000);
+        dayName = days[d.getDay()];
 
-        weatherFive += "<b> Date: " + val.dt_txt + "</b>";//Date - need to adjust
         weatherFive += "<p> " // Opening paragraph tag
-        weatherFive += "<b>Day " + index + "</b>: " // Day
+        weatherFive += "<b> " + index + "</b>: " // Day
         //added the convert to Ferinheight to line and the .toFixed() only working on Day 0.
+        weatherFive += "<b>" + timesToDisplay.indexOf(index) + " (" + dayName + ")</b>: " // DateTime
         weatherFive += convertToFerinheight(val.main.temp).toFixed(2) + "&degF" // Temperature
         weatherFive += "<span> | Humidity: "+ val.main.humidity + "% </span>"
         weatherFive += "<span> | " + val.weather[0].description + "</span>"; // Description
         weatherFive += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
         weatherFive += "</p>" // Closing paragraph tag
         
-      
+        }
     });
       $("#fiveDayForecast").html(weatherFive);
 
@@ -141,14 +155,4 @@ console.log($(this).text())
 getCurrentWeatherAndDisplay($(this).text())
 getFiveDayForcastAndDisplay($(this).text())
 });
-
-//outstanding items
-  //1. complete the Forcast
-      //A. Limit the degrees length - complete - needed to have the .toFixed outside of ().toFixed(2)
-      //B. Need to updte the date from undefined line 82
-      //C. Fix the day 0  - should === the current day +1
-      //D. update the .md - in Process 
-      //F. Local Storage
-      //G. Format HTML/CSS for format once the functionality is 
-      //H. Complete the UV Index
 
