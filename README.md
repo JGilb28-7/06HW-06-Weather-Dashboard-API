@@ -2,7 +2,7 @@
 #### Jonathan Gilbert
 #### Github -  https://github.com/JGilb28-7/06HW-06-Weather-Dashboard-API.git
 #### Deplpoyment -  https://jgilb28-7.github.io/06HW-06-Weather-Dashboard-API/.
-
+![weather dashboard demo](./Assets/Images/WeatherAPI.png)
 ### Assignment
 
 Homework 06 Server-Side APIs: Weather Dashboard - 
@@ -68,5 +68,5 @@ click on a city in the search history - complete
 
 The following image demonstrates the application functionality:
 
-![weather dashboard demo](./Assets/Images/WeatherAPI.png)
+
 
