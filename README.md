@@ -2,7 +2,8 @@
 ## Jonathan Gilbert
 ## Github -  https://github.com/JGilb28-7/06HW-06-Weather-Dashboard-API.git
 ## Deplpoyment -  https://jgilb28-7.github.io/06HW-06-Weather-Dashboard-API/.
-![weather dashboard demo](./link/)
+![weather dashboard demo](.Assets/Images/WeatherAPI.png)
+
 
 ### Assignment
 
@@ -17,8 +18,7 @@ Optained the openweathermap key: ff72d96a24410b758f22678b53189672
 Google
 Openweatherapp.org - API Documentation
 Class activities - used the Movie references and 05-Bujumbura
-Used the cnt = 5 to limit the daily response - this is in the API Doc for Weather 
-
+ ]
 https://stackoverflow.com/questions/49640174/building-a-5-day-forecast-using-open-weather-api-ajax-and-js
 https://sceendy.com/blog/2017/09-27-weather-widget-tutorial/
 
@@ -41,6 +41,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteratio
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
 example: arr.indexOf(searchElement[, fromIndex])
 
+https://youtu.be/DdkQ6eWDPZk - found helpful for looking the time formatting - lon and lat - stack example better with the re-work!
+
 
 ## Acceptance Criteria
 
@@ -56,7 +58,7 @@ an icon representation of weather conditions - outstandind
 the temperature - complete
 the humidity - complete
 the wind speed - complete 
-the UV index - outstanding
+the UV index - complete - no colors on HTML yet.. however this would be if / else statemets if above if else below else below and would set the colors in .css for future re-tune
     presented with a color that indicates whether the conditions are favorable, moderate, or severe
 
 view future weather conditions for that city - 5 day complete - 100%
