@@ -1,8 +1,8 @@
 # 06HW-06-Weather-Dashboard-API
-## Jonathan Gilbert
-## Github -  https://github.com/JGilb28-7/06HW-06-Weather-Dashboard-API.git
-## Deplpoyment -  https://jgilb28-7.github.io/06HW-06-Weather-Dashboard-API/.
-![weather dashboard demo](.Assets/Images/WeatherAPI.png)
+#### Jonathan Gilbert
+#### Github -  https://github.com/JGilb28-7/06HW-06-Weather-Dashboard-API.git
+#### Deplpoyment -  https://jgilb28-7.github.io/06HW-06-Weather-Dashboard-API/.
+![weather dashboard demo](./Assets/Images/WeatherAPI.png)
 
 
 ### Assignment
